@@ -2,12 +2,12 @@ const { crashReporter } = require("electron");
 
 const tabelaVenda =  document.getElementById("tabelaTableDados");
 const ModalCodvenda = document.getElementById("ModalCodvenda");
-const ModalCodliente = document.getElementById("ModalCodcliente");
-const ModalCodproduto = document.getElementById("ModalCodproduto");
-const ModalCodusuario = document.getElementById("ModalCodusuario");
+const ModalCodliente = document.getElementById("campoDropCliente");
+const ModalCodproduto = document.getElementById("campoDropProduto");
+const ModalCodusuario = document.getElementById("campoDropUsuario");
 const ModalStatus = document.getElementById("ModalStatus");
-const ModalValorTotal = document.getElementById("ModalValorTotal");
-const ModalData = document.getElementById("ModalData");
+const ModalValorTotal = document.getElementById("venda-valortotal");
+const ModalData = document.getElementById("venda-data");
 
 //botao
 const botaoSalvarVenda = document.getElementById("btn-salvar");

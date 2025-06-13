@@ -9,7 +9,9 @@ function buscarProdutos() {
 }
 
 
-
+function buscarUsuario() {
+    return ipcRenderer.invoke('buscar-usuario')
+}
 
 
 
@@ -43,6 +45,7 @@ contextBridge.exposeInMainWorld('api', {
 
     buscarProdutos: buscarProdutos,
 
+buscarUsuario: buscarUsuario,
 
     BuscarVenda: BuscarVenda,   
     adicionarVenda: adicionarVenda,
@@ -57,6 +60,5 @@ function abrirVenda() {
 
 contextBridge.exposeInMainWorld('api',
     { abrirVenda
-
     }
 );

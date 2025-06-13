@@ -13,7 +13,7 @@ function createMainWindow() {
         }
     });
  
-    janelaPrincipal.loadFile('./src/index.html');
+    janelaPrincipal.loadFile('./src/venda/venda.html');
 
     janelaPrincipal.on('closed', () => {
         janelaPrincipal = null;

@@ -1,74 +1,68 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="materia.css">
-    <title>Lista de Materia</title>
+    <link rel="stylesheet" href="venda.css">
+    <title>Lista de Vendas</title>
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body>
     <header>
-        <h1>Informações de Materia</h1>
+        <h1>Informações de Vendas</h1>
     </header>
-    <p id="teste"></p>
+    <p id="mensagem"></p>
     <button id="btn-limpar"><i data-lucide="circle-plus"></i></button>
 
-    <table id="cursoTable">
+    <table id="vendaTable">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>aluno</th>
-                <th>professor</th>
-                <th>materia</th>
-                <th>avaliacao </th>
+                <th>codVenda</th>
+                <th>codCliente</th>
+                <th>codProduto</th>
+                <th>codUsuario</th>
+                <th>Status</th>
+                <th>Data</th>
+                <th>Valor Total</th>
             </tr>
         </thead>
-        <tbody id="notaTableDados">
+        <tbody id="tabelaTableDados">
         </tbody>
     </table>
 
-    <!--modal-->
+    <!-- Modal -->
     <div id="modal">
-        <h3>Edite os dados das Notas:</h3>
-        <label>ID: <input type="text" id="nota-id" readonly />
+        <h3>Edite os dados da Venda:</h3>
+        <label>codVenda: <input type="text" id="ModalCodvenda" readonly /></label>
+        <br><br>
+        <label>Status: 
+            <select id="ModalStatus">
+                <option value="Pendente">Pendente</option>
+                <option value="Finalizada">Finalizada</option>
+                <option value="Cancelada">Cancelada</option>
+            </select>
         </label>
+        <br><br>
+        <label>Selecione um Cliente: </label>
+        <select id="campoDropCliente"></select>
         <br>
-
+        <label>Selecione um Produto: </label>
+        <select id="campoDropProduto"></select>
         <br>
-       <label>avaliacao: 
-  <select id="nota-avaliacao">
-    <option value="Aprovado">Aprovado</option>
-    <option value="Reprovado">Reprovado</option>
-  </select>
-</label>
-
-
-
-            <br>
-
-            <label>selecione uma opçao dos alunos: </label>
-            <select id="campoDropAluno">
-            </select>
-            <br>
-            <label>selecione uma opçao dos professores: </label>
-            <select id="campoDropProfessor">
-            </select>
-            <br>
-            <label>selecione uma opçao das materias: </label>
-            <select id="campoDropMateria">
-            </select>
-
-            <br>
-            <label></label>
-            <button id="btn-salvar">Salvar</button>
-            <button id="btn-excluir">Excluir</button>
+        <label>Selecione um Usuário: </label>
+        <select id="campoDropUsuario"></select>
+        <br>
+        <label>Data: <input type="date" id="venda-data" /></label>
+        <br>
+        <label>Valor Total: <input type="number" id="venda-valortotal" step="0.01" /></label>
+        <br><br>
+        <button id="btn-salvar">Salvar</button>
+        <button id="btn-excluir">Excluir</button>
     </div>
 
-    <script src="nota.js"></script>
+    <script src="venda.js"></script>
 </body>
 
 </html>

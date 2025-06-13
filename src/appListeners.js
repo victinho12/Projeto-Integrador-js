@@ -15,9 +15,13 @@ const {
     buscarProdutos
 } = require('./produto/produtoDb');
 
+const {
+ buscarUsuario
+} = require ('./usuario/usuarioDb')
 
-
-
+function registrarUsuarioHandler(){
+    ipcMain.handle('buscar-usuario',buscarUsuario)
+}
 
 function registrarProdutoHandler() {
     ipcMain.handle('buscar-produtos', buscarProdutos);
@@ -35,6 +39,7 @@ function registrarVendaHandler() {
 }
 
 function registrarTodos() {
+    registrarUsuarioHandler();
     registrarClienteHandler();
     registrarVendaHandler();
     registrarProdutoHandler();
