@@ -4,8 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="venda.css">
     <title>Lista de Vendas</title>
+
+    <!-- Link para o CSS -->
+    <link rel="stylesheet" href="venda.css">
+
+    <!-- Ícones Lucide -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
@@ -13,56 +17,81 @@
     <header>
         <h1>Informações de Vendas</h1>
     </header>
-    <p id="mensagem"></p>
-    <button id="btn-limpar"><i data-lucide="circle-plus"></i></button>
 
+    <!-- Mensagens de status -->
+    <p id="mensagem"></p>
+
+    <!-- Botão de limpar formulário -->
+    <button id="btn-limpar">
+        <i data-lucide="circle-plus"></i> Limpar
+    </button>
+
+    <!-- Tabela de Vendas -->
     <table id="vendaTable">
         <thead>
             <tr>
-                <th>codVenda</th>
-                <th>codCliente</th>
-                <th>codProduto</th>
-                <th>codUsuario</th>
+                <th>Código</th>
+                <th>Cliente</th>
+                <th>Produto</th>
+                <th>Usuário</th>
                 <th>Status</th>
-                <th>Data</th>
                 <th>Valor Total</th>
+                 <th>Data</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody id="tabelaTableDados">
+            <!-- As vendas serão carregadas aqui via JS -->
         </tbody>
     </table>
 
-    <!-- Modal -->
+    <!-- Modal de edição de venda -->
     <div id="modal">
-        <h3>Edite os dados da Venda:</h3>
-        <label>codVenda: <input type="text" id="ModalCodvenda" readonly /></label>
+        <h3>Editar Venda</h3>
+
+        <label for="ModalCodvenda">Código da Venda:</label>
+        <input type="text" id="ModalCodvenda" readonly />
         <br><br>
-        <label>Status: 
-            <select id="ModalStatus">
-                <option value="Pendente">Pendente</option>
-                <option value="Finalizada">Finalizada</option>
-                <option value="Cancelada">Cancelada</option>
-            </select>
-        </label>
+
+        <label for="ModalStatus">Status:</label>
+        <select id="ModalStatus">
+            <option value="Pendente">Pendente</option>
+            <option value="Finalizada">Finalizada</option>
+            <option value="Cancelada">Cancelada</option>
+        </select>
         <br><br>
-        <label>Selecione um Cliente: </label>
+
+        <label for="campoDropCliente">Cliente:</label>
         <select id="campoDropCliente"></select>
-        <br>
-        <label>Selecione um Produto: </label>
-        <select id="campoDropProduto"></select>
-        <br>
-        <label>Selecione um Usuário: </label>
-        <select id="campoDropUsuario"></select>
-        <br>
-        <label>Data: <input type="date" id="venda-data" /></label>
-        <br>
-        <label>Valor Total: <input type="number" id="venda-valortotal" step="0.01" /></label>
         <br><br>
+
+        <label for="campoDropProduto">Produto:</label>
+        <select id="campoDropProduto"></select>
+        <br><br>
+
+        <label for="campoDropUsuario">Usuário:</label>
+        <select id="campoDropUsuario"></select>
+        <br><br>
+
+        <label for="venda-data">Data:</label>
+        <input type="date" id="venda-data" />
+        <br><br>
+
+        <label for="venda-valortotal">Valor Total:</label>
+        <input type="number" id="venda-valortotal" step="0.01" />
+        <br><br>
+
         <button id="btn-salvar">Salvar</button>
         <button id="btn-excluir">Excluir</button>
     </div>
 
+    <!-- JS da venda -->
     <script src="venda.js"></script>
+
+    <!-- Inicializar ícones -->
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 
 </html>

@@ -5,3 +5,8 @@ async function buscarProdutos() {
     return resultado.rows;
     
 }
+
+module.exports = {
+ buscarProdutos
+ 
+};

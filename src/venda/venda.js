@@ -1,4 +1,4 @@
-const { crashReporter } = require("electron");
+
 
 const tabelaVenda =  document.getElementById("tabelaTableDados");
 const ModalCodvenda = document.getElementById("ModalCodvenda");
@@ -51,8 +51,9 @@ async function atualizarVenda() {
     carregarVendas();
     
 }
-async function adicionarVendA() {
+async function adicionarVenda() {
     const codcliente = ModalCodliente.value;
+    console.log(ModalCodliente.value)
     const codproduto = ModalCodproduto.value;
     const codusuario = ModalCodusuario.value;
     const status = ModalStatus.value;
@@ -73,20 +74,21 @@ async function adicionarVendA() {
     ModalValorTotal.value = "";
     ModalData.value = "";
 }
-
 async function carregarVendas() {
-    const listaVendas = await window.api.BuscarVendas();
-    tabelaVenda.innerHTML = ""; // Limpa a tabela antes de adicionar novos dados
+    const listaVendas = await window.api.BuscarVenda();
+    tabelaVenda.innerHTML = ""; // Limpa a tabela
 
-    limparVenda.forEach(criaLinhaVenda);
-
-    if (listaVendas.length ) {
+    if (listaVendas.length > 0) {
+        listaVendas.forEach(CriarLinhaVenda);
+    } else {
         tabelaVenda.textContent = "Nenhuma venda encontrada.";
     }
-listaCliente()
-listaProduto()
-listaUsuario()
+
+    listaCliente();
+    listaProduto();
+    listaUsuario();
 }
+
 
 function CriarLinhaVenda(venda){
     const linha = document.createElement("tr");
@@ -96,15 +98,15 @@ function CriarLinhaVenda(venda){
     linha.appendChild(celulaCodvenda);
 
     const celulaCodcliente = document.createElement("td");
-    celulaCodcliente.textContent = venda.codcliente;
+    celulaCodcliente.textContent = venda.nome_cliente;
     linha.appendChild(celulaCodcliente);
 
     const celulaCodproduto = document.createElement("td");
-    celulaCodproduto.textContent = venda.codproduto;    
+    celulaCodproduto.textContent = venda.nome_produto;    
     linha.appendChild(celulaCodproduto);
 
     const celulaCodusuario = document.createElement("td");
-    celulaCodusuario.textContent = venda.codusuario;    
+    celulaCodusuario.textContent = venda.nome_usuario;    
     linha.appendChild(celulaCodusuario);
 
     const celulaStatus = document.createElement("td");
@@ -116,7 +118,7 @@ function CriarLinhaVenda(venda){
     linha.appendChild(celulaValorTotal);
 
     const celulaData = document.createElement("td");
-    celulaData.textContent = venda.data;
+    celulaData.textContent = venda.data.toLocaleDateString();
     linha.appendChild(celulaData);
 
     const celulabotao = document.createElement("td");
@@ -136,37 +138,37 @@ function CriarLinhaVenda(venda){
 
 function salvarVenda() {
     const codvenda = ModalCodvenda.value;
-
+    console.log(ModalCodliente.value)
     if (codvenda) {
         atualizarVenda();
     } else {
-        adicionarVendA();
+        adicionarVenda();
     }
 }
 
 carregarVendas();
-
 async function listaCliente() {
     const listaClientes = await window.api.BuscarClientes();
+    console.log(listaClientes)
     listaClientes.forEach(mostrarDetalhesCliente);
-    console.table(listaClientes);
 }
 
 async function listaProduto() {
-    const listaProdutos = await window.api.BuscarProdutos();
+    const listaProdutos = await window.api.buscarProdutos();
     listaProdutos.forEach(mostrarDetalhesProduto);
-    console.table(listaProdutos);
 }
 
 async function listaUsuario() {
-    const listaUsuarios = await window.api.BuscarUsuarios();
+    const listaUsuarios = await window.api.buscarUsuario();
+
     listaUsuarios.forEach(mostrarDetalhesUsuario);
-    console.table(listaUsuarios);
 }
+
 
 function mostrarDetalhesCliente(cliente) {
     const option = document.createElement("option");
     option.value = cliente.codcliente;
+       console.log(option.value)
     option.textContent = cliente.nome;
     ModalCodliente.appendChild(option);
 }
@@ -180,8 +182,10 @@ function mostrarDetalhesProduto(produto) {
 
 function mostrarDetalhesUsuario(usuario) {
     const option = document.createElement("option");
+    console.log(usuario)
     option.value = usuario.codusuario;
-    option.textContent = usuario.nome;
+    option.textContent =  usuario.nome;
     ModalCodusuario.appendChild(option);
 }
+
 
