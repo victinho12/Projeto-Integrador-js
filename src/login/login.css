@@ -1,0 +1,65 @@
+/* Reset básico */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #eafaf1; /* Verde claro de fundo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2);
+    text-align: center;
+    width: 300px;
+}
+
+h2 {
+    color: #2e7d32; /* Verde escuro no título */
+    margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #a5d6a7; /* Verde suave na borda */
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+    background-color: #f1f8e9; /* Fundo verde bem claro nos campos */
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #66bb6a; /* Verde médio quando focado */
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4caf50; /* Botão verde */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #388e3c; /* Verde mais escuro no hover */
+}
+
+#msg {
+    margin-top: 15px;
+    color: #c62828; /* Vermelho escuro para mensagens de erro */
+    font-size: 14px;
+}

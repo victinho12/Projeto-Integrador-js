@@ -37,14 +37,28 @@ function abrirVenda() {
     return ipcRenderer.invoke('abrir-venda');
 }
 
+function validarLogin(usuario,senha){
+    return ipcRenderer.invoke('validar-login',usuario,senha)
+}
+
+
+
+
+
 // Expondo todas as funções de uma vez só (EVITA sobrescrever)
 contextBridge.exposeInMainWorld('api', {
     BuscarClientes: BuscarClientes,
+
     buscarProdutos: buscarProdutos,
+
     buscarUsuario: buscarUsuario,
+
     BuscarVenda: BuscarVenda,
     adicionarVenda: adicionarVenda,
     atualizarVenda: atualizarVenda,
     deletarVenda: deletarVenda,
-    abrirVenda: abrirVenda
+    abrirVenda: abrirVenda,
+
+    validarLogin
+
 });

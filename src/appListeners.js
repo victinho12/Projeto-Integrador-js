@@ -1,6 +1,7 @@
 const { contextBridge, ipcRenderer, ipcMain } = require('electron');
 
 
+
 const {
     BuscarClientes,
 } = require('./cliente/clienteDb');
@@ -18,6 +19,17 @@ const {
 const {
  buscarUsuario
 } = require ('./usuario/usuarioDb')
+
+
+const {
+    validarLogin
+}= require('./login/loginDB');
+
+
+function registrarLoginHandler(){
+    ipcMain.handle('validar-login',validarLogin);
+}
+
 
 function registrarUsuarioHandler(){
     ipcMain.handle('buscar-usuario',buscarUsuario)
@@ -43,6 +55,7 @@ function registrarTodos() {
     registrarClienteHandler();
     registrarVendaHandler();
     registrarProdutoHandler();
+    registrarLoginHandler();
 }
 
 module.exports = {
