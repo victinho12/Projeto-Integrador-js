@@ -3,6 +3,7 @@ const path = require('path')
 
 let janelaLogin;
 let janelaPrincipal;
+let janelaPrincipalUser;
 
 function createMainWindow() {
     janelaPrincipal = new BrowserWindow({
@@ -13,15 +14,38 @@ function createMainWindow() {
         }
     });
 
-    janelaPrincipal.loadFile('./src/venda/venda.html');
+    janelaPrincipal.loadFile('./src/index.html');
 
     janelaPrincipal.on('closed', () => {
         janelaPrincipal = null;
     });
+janelaLogin.close();    
 
     return janelaPrincipal;
 }
 
+
+function createMainWindowUser() {
+    janelaPrincipalUser = new BrowserWindow({
+        width: 800,
+        height: 600,
+        webPreferences: {
+            preload: path.join(__dirname, 'preload.js')
+        }
+    });
+
+    janelaPrincipalUser.loadFile('./src/index.html');
+
+    janelaPrincipalUser.on('closed', () => {
+        janelaPrincipalUser = null;
+    });
+janelaLogin.close();    
+
+    return janelaPrincipalUser;
+}
+function getJanelaPrincipalUser() {
+    return janelaPrincipalUser;
+}
 
 function getJanelaPrincipal() {
     return janelaPrincipal;
@@ -29,8 +53,8 @@ function getJanelaPrincipal() {
 
 function createLoginWindon() {
     janelaLogin = new BrowserWindow({
-        width: 400,
-        height: 300,
+        width: 500,
+        height: 400,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js')
         }
@@ -47,5 +71,7 @@ function getJanelaLogin(){
 module.exports = {
     createMainWindow,
     getJanelaPrincipal,
-    createLoginWindon
+    createLoginWindon,
+    createMainWindowUser,
+    getJanelaPrincipalUser,
 }

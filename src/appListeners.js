@@ -1,19 +1,22 @@
 const { contextBridge, ipcRenderer, ipcMain } = require('electron');
 
+const {createMainWindow,createMainWindowUser} = require('./janelaPrincipal');
 
 
-const {
-    BuscarClientes,
-} = require('./cliente/clienteDb');
 const {
     atualizarVenda,
     BuscarVenda,
     deletarVenda,
-    adicionarVenda
+    adicionarVenda,
+    
 } = require('./venda/vendaDb');
 
 const {
-    buscarProdutos
+    buscarProdutos,
+    adicionarProduto,
+    atualizarProduto,
+    deletarProduto
+
 } = require('./produto/produtoDb');
 
 const {
@@ -25,6 +28,20 @@ const {
     validarLogin
 }= require('./login/loginDB');
 
+const {
+modalAbrirVenda,
+    modalAbrirProduto,
+    modalAbrirCliente
+} = require('./janelaModal');
+
+
+function registrarJanelas(){
+    ipcMain.on('abrir-venda',modalAbrirVenda),
+    ipcMain.on('abrir-produto',modalAbrirProduto),
+    ipcMain.on('abrir-menu',createMainWindow),
+    ipcMain.on('abrir-menu-user',createMainWindowUser);
+    ipcMain.on('abrir-cliente',modalAbrirCliente);
+}
 
 function registrarLoginHandler(){
     ipcMain.handle('validar-login',validarLogin);
@@ -33,14 +50,30 @@ function registrarLoginHandler(){
 
 function registrarUsuarioHandler(){
     ipcMain.handle('buscar-usuario',buscarUsuario)
+ 
+
 }
 
 function registrarProdutoHandler() {
     ipcMain.handle('buscar-produtos', buscarProdutos);
+    ipcMain.handle('adicionar-produto', adicionarProduto);
+    ipcMain.handle('atualizar-produto', atualizarProduto);
+    ipcMain.handle('deletar-produto', deletarProduto);
 }
+
+const {
+    BuscarClientes,
+    adicionarCliente,
+    atualizarCliente,
+    deletarCliente
+} = require('./cliente/clienteDb');
 
 function registrarClienteHandler() {
     ipcMain.handle('buscar-clientes', BuscarClientes);
+    ipcMain.handle('adicionar-cliente', adicionarCliente);
+    ipcMain.handle('atualizar-cliente', atualizarCliente);
+    ipcMain.handle('deletar-cliente', deletarCliente);
+    
 }
 
 function registrarVendaHandler() {
@@ -48,7 +81,10 @@ function registrarVendaHandler() {
     ipcMain.handle('deletar-venda', deletarVenda);
     ipcMain.handle('atualizar-venda', atualizarVenda);
     ipcMain.handle('adicionar-venda', adicionarVenda);
+
 }
+
+
 
 function registrarTodos() {
     registrarUsuarioHandler();
@@ -56,6 +92,7 @@ function registrarTodos() {
     registrarVendaHandler();
     registrarProdutoHandler();
     registrarLoginHandler();
+    registrarJanelas();
 }
 
 module.exports = {

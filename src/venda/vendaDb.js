@@ -5,7 +5,7 @@ async function BuscarVenda() {
         SELECT 
     vendas.codvenda,
     vendas.codcliente,
-    cliente.nome AS nome_cliente,
+    clientes.nome AS nome_cliente,
     vendas.codproduto,
     produtos.nome AS nome_produto,
     vendas.codusuario,
@@ -14,7 +14,7 @@ async function BuscarVenda() {
     vendas.valortotal,
     vendas.data
 FROM vendas
-JOIN cliente ON vendas.codcliente = cliente.codcliente
+JOIN clientes ON vendas.codcliente = clientes.codcliente
 JOIN produtos ON vendas.codproduto = produtos.codproduto
 JOIN usuarios ON vendas.codusuario = usuarios.codusuario
 ORDER BY vendas.codvenda;

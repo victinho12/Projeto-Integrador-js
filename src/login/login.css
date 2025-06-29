@@ -1,65 +1,94 @@
-/* Reset básico */
-body {
+* {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #eafaf1; /* Verde claro de fundo */
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  body {
+    height: 100vh;
+    background: linear-gradient(135deg, #991b1b, #ef4444);
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-}
-
-.login-container {
-    background-color: #ffffff;
-    padding: 30px 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2);
+  }
+  
+  .login-container {
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 380px;
     text-align: center;
-    width: 300px;
-}
-
-h2 {
-    color: #2e7d32; /* Verde escuro no título */
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
     margin-bottom: 20px;
-}
-
-input[type="text"],
-input[type="password"] {
+  }
+  
+  #logo-icon {
+    width: 40px;
+    height: 40px;
+    color: #dc2626;
+  }
+  
+  h2 {
+    color: #dc2626;
+  }
+  
+  p {
+    color: #444;
+    margin-bottom: 16px;
+  }
+  
+  input {
     width: 100%;
     padding: 12px;
-    margin: 10px 0;
-    border: 1px solid #a5d6a7; /* Verde suave na borda */
-    border-radius: 5px;
-    box-sizing: border-box;
-    font-size: 14px;
-    background-color: #f1f8e9; /* Fundo verde bem claro nos campos */
-}
-
-input[type="text"]:focus,
-input[type="password"]:focus {
-    border-color: #66bb6a; /* Verde médio quando focado */
+    margin-bottom: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+    transition: border-color 0.3s;
+  }
+  
+  input:focus {
+    border-color: #dc2626;
     outline: none;
-}
-
-button {
+  }
+  
+  #acessar {
     width: 100%;
     padding: 12px;
-    background-color: #4caf50; /* Botão verde */
+    background-color: #dc2626;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #388e3c; /* Verde mais escuro no hover */
-}
-
-#msg {
-    margin-top: 15px;
-    color: #c62828; /* Vermelho escuro para mensagens de erro */
+    transition: background 0.3s;
+  }
+  
+  #acessar:hover {
+    background-color: #b91c1c;
+  }
+  
+  #msg {
+    color: #b91c1c;
+    margin-top: 10px;
     font-size: 14px;
-}
+  }
+  
+  a {
+    color: #dc2626;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }

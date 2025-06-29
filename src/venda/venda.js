@@ -1,46 +1,32 @@
-
-
-const tabelaVenda =  document.getElementById("tabelaTableDados");
+const tabelaVenda = document.getElementById("tabelaTableDados");
 const ModalCodvenda = document.getElementById("ModalCodvenda");
-const ModalCodliente = document.getElementById("campoDropCliente");
+const ModalCodcliente = document.getElementById("campoDropCliente");
 const ModalCodproduto = document.getElementById("campoDropProduto");
 const ModalCodusuario = document.getElementById("campoDropUsuario");
 const ModalStatus = document.getElementById("ModalStatus");
 const ModalValorTotal = document.getElementById("venda-valortotal");
 const ModalData = document.getElementById("venda-data");
 
-//botao
+//botão
 const botaoSalvarVenda = document.getElementById("btn-salvar");
 const botaoExcluirVenda = document.getElementById("btn-excluir");
 const botaoLimparVenda = document.getElementById("btn-limpar");
 
 //eventos
-botaoExcluirVenda.addEventListener("click", excluirVenda);
+botaoExcluirVenda.addEventListener("click", deletarVenda);
 botaoSalvarVenda.addEventListener("click", salvarVenda);
 botaoLimparVenda.addEventListener("click", limparVenda);
 
-
-
-function mostrarDetalhesVenda(codvenda, codcliente, codproduto, codusuario, status, valortotal, data) {
-    ModalCodvenda.textContent = codvenda;
-    ModalCodliente.textContent = codcliente;
-    ModalCodproduto.textContent = codproduto;
-    ModalCodusuario.textContent = codusuario;
-    ModalStatus.textContent = status;
-    ModalValorTotal.textContent = valortotal;
-    ModalData.textContent = data;
-}
-
-async function excluirVenda() {
+async function deletarVenda() {
     const codvenda = ModalCodvenda.value;
-    await window.api.excluirVenda(codvenda);
+    await window.api.deletarVenda(codvenda);
     mostrarDetalhesVenda("", "", "", "", "", "", "");
-carregarVendas();
+    carregarVendas();
 }
 
 async function atualizarVenda() {
     const codvenda = ModalCodvenda.value;
-    const codcliente = ModalCodliente.value;
+    const codcliente = ModalCodcliente.value;
     const codproduto = ModalCodproduto.value;
     const codusuario = ModalCodusuario.value;
     const status = ModalStatus.value;
@@ -49,11 +35,10 @@ async function atualizarVenda() {
 
     await window.api.atualizarVenda(codvenda, codcliente, codproduto, codusuario, status, valortotal, data);
     carregarVendas();
-    
 }
+
 async function adicionarVenda() {
-    const codcliente = ModalCodliente.value;
-    console.log(ModalCodliente.value)
+    const codcliente = ModalCodcliente.value;
     const codproduto = ModalCodproduto.value;
     const codusuario = ModalCodusuario.value;
     const status = ModalStatus.value;
@@ -62,21 +47,21 @@ async function adicionarVenda() {
 
     await window.api.adicionarVenda(codcliente, codproduto, codusuario, status, valortotal, data);
     carregarVendas();
-    
 }
 
-   function limparVenda() {
+function limparVenda() {
     ModalCodvenda.value = "";
-    ModalCodliente.value = "";
+    ModalCodcliente.value = "";
     ModalCodproduto.value = "";
     ModalCodusuario.value = "";
     ModalStatus.value = "";
     ModalValorTotal.value = "";
     ModalData.value = "";
 }
+
 async function carregarVendas() {
     const listaVendas = await window.api.BuscarVenda();
-    tabelaVenda.innerHTML = ""; // Limpa a tabela
+    tabelaVenda.innerHTML = "";
 
     if (listaVendas.length > 0) {
         listaVendas.forEach(CriarLinhaVenda);
@@ -84,15 +69,21 @@ async function carregarVendas() {
         tabelaVenda.textContent = "Nenhuma venda encontrada.";
     }
 
+    let clienteNaoPode = localStorage.getItem("perfil");
+    if (clienteNaoPode !== 'adm') {
+        botaoExcluirVenda.disabled = true;
+        botaoSalvarVenda.disabled = true;
+    }
+
+    lucide.createIcons();
     listaCliente();
     listaProduto();
     listaUsuario();
 }
 
-
-function CriarLinhaVenda(venda){
+function CriarLinhaVenda(venda) {
     const linha = document.createElement("tr");
-    
+
     const celulaCodvenda = document.createElement("td");
     celulaCodvenda.textContent = venda.codvenda;
     linha.appendChild(celulaCodvenda);
@@ -102,11 +93,11 @@ function CriarLinhaVenda(venda){
     linha.appendChild(celulaCodcliente);
 
     const celulaCodproduto = document.createElement("td");
-    celulaCodproduto.textContent = venda.nome_produto;    
+    celulaCodproduto.textContent = venda.nome_produto;
     linha.appendChild(celulaCodproduto);
 
     const celulaCodusuario = document.createElement("td");
-    celulaCodusuario.textContent = venda.nome_usuario;    
+    celulaCodusuario.textContent = venda.nome_usuario;
     linha.appendChild(celulaCodusuario);
 
     const celulaStatus = document.createElement("td");
@@ -118,18 +109,26 @@ function CriarLinhaVenda(venda){
     linha.appendChild(celulaValorTotal);
 
     const celulaData = document.createElement("td");
-    celulaData.textContent = venda.data.toLocaleDateString();
+    celulaData.textContent = new Date(venda.data).toLocaleDateString();
     linha.appendChild(celulaData);
 
     const celulabotao = document.createElement("td");
     const botao = document.createElement("button");
-    botao.addEventListener("click", function() {
-        mostrarDetalhesVenda(venda.codvenda, venda.codcliente, venda.codproduto, venda.codusuario, venda.status, venda.valortotal, venda.data);
-    });
     botao.textContent = "Editar";
     const icone = document.createElement("i");
     icone.setAttribute("data-lucide", "edit");
     botao.appendChild(icone);
+    botao.addEventListener("click", function () {
+        mostrarDetalhesVenda(
+            venda.codvenda,
+            venda.codcliente,
+            venda.codproduto,
+            venda.codusuario,
+            venda.status,
+            venda.valortotal,
+            venda.data
+        );
+    });
     celulabotao.appendChild(botao);
     linha.appendChild(celulabotao);
 
@@ -138,7 +137,6 @@ function CriarLinhaVenda(venda){
 
 function salvarVenda() {
     const codvenda = ModalCodvenda.value;
-    console.log(ModalCodliente.value)
     if (codvenda) {
         atualizarVenda();
     } else {
@@ -147,9 +145,9 @@ function salvarVenda() {
 }
 
 carregarVendas();
+
 async function listaCliente() {
     const listaClientes = await window.api.BuscarClientes();
-    console.log(listaClientes)
     listaClientes.forEach(mostrarDetalhesCliente);
 }
 
@@ -160,17 +158,14 @@ async function listaProduto() {
 
 async function listaUsuario() {
     const listaUsuarios = await window.api.buscarUsuario();
-
     listaUsuarios.forEach(mostrarDetalhesUsuario);
 }
-
 
 function mostrarDetalhesCliente(cliente) {
     const option = document.createElement("option");
     option.value = cliente.codcliente;
-       console.log(option.value)
     option.textContent = cliente.nome;
-    ModalCodliente.appendChild(option);
+    ModalCodcliente.appendChild(option);
 }
 
 function mostrarDetalhesProduto(produto) {
@@ -182,10 +177,26 @@ function mostrarDetalhesProduto(produto) {
 
 function mostrarDetalhesUsuario(usuario) {
     const option = document.createElement("option");
-    console.log(usuario)
     option.value = usuario.codusuario;
-    option.textContent =  usuario.nome;
+    option.textContent = usuario.nome;
     ModalCodusuario.appendChild(option);
 }
+function mostrarDetalhesVenda(codvenda, codcliente, codproduto, codusuario, status, valortotal, data) {
+    ModalCodvenda.value = codvenda;
+    ModalCodcliente.value = codcliente;
+    ModalCodproduto.value = codproduto;
+    ModalCodusuario.value = codusuario;
+    ModalStatus.value = status;
+    ModalValorTotal.value = valortotal
+        .replace("R$ ", "")
+        .replace(".", "")
+        .replace(",", ".");
 
-
+    const dataObj = new Date(data);
+    if (!isNaN(dataObj.getTime())) {
+        ModalData.value = dataObj.toISOString().split("T")[0];
+    } else {
+        console.warn("Data inválida recebida:", data);
+        ModalData.value = ""; // ou mantenha o valor anterior
+    }
+}
