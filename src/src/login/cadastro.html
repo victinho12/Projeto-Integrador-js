@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cadastro</title>
+</head>
+<body>
+  <h1>Cadastro de Usuário</h1>
+  <form id="formCadastro">
+    <input type="text" id="nome" placeholder="Nome" required /><br />
+    <input type="email" id="email" placeholder="Email" required /><br />
+    <input type="text" id="numero" placeholder="Número" required /><br />
+    <input type="password" id="senha" placeholder="Senha" required /><br />
+    <button type="submit">Cadastrar</button>
+  </form>
+  <p id="mensagem"></p>
+<a href="login.html">Voltar para o login</a>
+  <script>
+    const form = document.getElementById('formCadastro');
+    const msg1 = document.getElementById('mensagem');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nome = document.getElementById('nome').value;
+      const email = document.getElementById('email').value;
+      const numero = document.getElementById('numero').value;
+      const senha = document.getElementById('senha').value;
+
+      const resposta = await window.api.cadastrarUsuario(nome, email, numero, senha);
+      if (resposta.sucesso) {
+        msg1.textContent = 'Usuário cadastrado com sucesso!';
+        form.reset();
+        msg1.style.color = 'green';
+      
+      } else {
+        msg1.textContent = 'Erro: ' + resposta.erro;
+      }
+    });
+  
+  </script>
+</body>
+</html>
