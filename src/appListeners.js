@@ -31,17 +31,40 @@ const {
 const {
 modalAbrirVenda,
     modalAbrirProduto,
-    modalAbrirCliente
+    modalAbrirCliente,
+    modalAbrirCadastro
 } = require('./janelaModal');
+
+const {
+    mostrarAlert,
+    mostrarConfirm
+} = require('./dialog/dialog')
+
+const {
+    adicionarCadastro
+} = require('./cadastro/cadastroDb')
+
+function registrarJanelaDialog(){
+    ipcMain.handle("dialog-alert", mostrarAlert),
+    ipcMain.handle("dialog-confirm", mostrarConfirm)
+}
+
 
 
 function registrarJanelas(){
+    ipcMain.on("abrir-cadastro", modalAbrirCadastro),
     ipcMain.on('abrir-venda',modalAbrirVenda),
     ipcMain.on('abrir-produto',modalAbrirProduto),
     ipcMain.on('abrir-menu',createMainWindow),
     ipcMain.on('abrir-menu-user',createMainWindowUser);
     ipcMain.on('abrir-cliente',modalAbrirCliente);
 }
+
+//function de cadastro
+function registrarCadastro(){
+    ipcMain.handle('cadastro-usuario', adicionarCadastro);
+}
+
 
 function registrarLoginHandler(){
     ipcMain.handle('validar-login',validarLogin);
@@ -87,12 +110,14 @@ function registrarVendaHandler() {
 
 
 function registrarTodos() {
+    registrarCadastro();
     registrarUsuarioHandler();
     registrarClienteHandler();
     registrarVendaHandler();
     registrarProdutoHandler();
     registrarLoginHandler();
     registrarJanelas();
+    registrarJanelaDialog();
 }
 
 module.exports = {

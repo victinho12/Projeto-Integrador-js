@@ -9,6 +9,7 @@ function createMainWindow() {
     janelaPrincipal = new BrowserWindow({
         width: 800,
         height: 600,
+        icon : path.join(__dirname, 'img', 'escudoVermelho.png'),
         webPreferences: {
             preload: path.join(__dirname, 'preload.js')
         }
@@ -29,6 +30,7 @@ function createMainWindowUser() {
     janelaPrincipalUser = new BrowserWindow({
         width: 800,
         height: 600,
+        icon : path.join(__dirname, 'img', 'escudoVermelho.png'),
         webPreferences: {
             preload: path.join(__dirname, 'preload.js')
         }
@@ -55,6 +57,7 @@ function createLoginWindon() {
     janelaLogin = new BrowserWindow({
         width: 500,
         height: 400,
+        icon : path.join(__dirname, 'img', 'escudoVermelho.png'),
         webPreferences: {
             preload: path.join(__dirname, 'preload.js')
         }
@@ -74,4 +77,5 @@ module.exports = {
     createLoginWindon,
     createMainWindowUser,
     getJanelaPrincipalUser,
+    getJanelaLogin,
 }

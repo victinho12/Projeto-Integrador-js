@@ -1,6 +1,6 @@
 const { BrowserWindow } = require('electron')
 const path = require('path')
-const { getJanelaPrincipal, getJanelaPrincipalUser } = require('./janelaPrincipal')
+const { getJanelaPrincipal, getJanelaPrincipalUser, createLoginWindon, getJanelaLogin } = require('./janelaPrincipal')
 
 function criarJanelaModal(telaPai,arquivohtml) {
     const janela = new BrowserWindow({
@@ -56,10 +56,31 @@ function modalAbrirCliente(event) {
 }
 
 
+function modalAbrirCadastro(event){
+    let windowLogin = getJanelaLogin(); // Obtém a janela principal existente
+    if (windowLogin) {
+        criarJanelaModal(windowLogin, './src/cadastro/cadastro.html');
+    } else {
+        console.warn('Não foi possível abrir a modal: Janela principal não encontrada.');
+    }
+}
+function modalAbrirCliente(event) {
+    let mainWindow2 = getJanelaPrincipalUser(); // Obtém a janela principal do
+    let mainWindow = getJanelaPrincipal(); // Obtém a janela principal existente
+    mainWindow = mainWindow || mainWindow2; // Prioriza a janela do usuário,
+    if (mainWindow) {
+        criarJanelaModal(mainWindow, './src/cliente/cliente.html');
+    } else {
+        console.warn('Não foi possível abrir a modal: Janela principal não encontrada.');
+    }
+}
+
+
 
 module.exports = {
     criarJanelaModal,
     modalAbrirVenda,
     modalAbrirProduto,
-    modalAbrirCliente
+    modalAbrirCliente,
+    modalAbrirCadastro
 };
